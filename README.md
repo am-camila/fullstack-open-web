@@ -4,3 +4,17 @@ The course covers testing, configuration and environment management, and the use
 This year's edition of the course contains a new part on TypeScript.
 
 https://fullstackopen.com/
+
+
+- [x] Part0 - Fundamentals of Web apps
+- [x] Part1 - Introduction to React
+- [ ] Part2 - Communicating with server
+- [ ] Part3 - Programming a server with NodeJS and Express
+- [ ] Part4 - Testing Express servers, user administration
+- [ ] Part5 - Testing React apps
+- [ ] Part6 - State management with Redux
+- [ ] Part7 - React router, custom hooks, styling app with CSS and webpack
+- [ ] Part8 - GraphQL
+- [ ] Part9 - Typescript
+- [ ] Part10 - React Native
+- [ ] Part11 - CI/CD
