@@ -18,19 +18,17 @@ const Part = (content) => {
 }
 
 const Content = (props) => {
- //Using index only because in this case the displayed data never changes or is reordered/filtered. otherwise is NOT recomended
   return (   
     <div>
-      {props.content.map( (p, index) => <Part content={p} key={index}/>)} 
+      {props.content.map( (p) => <Part content={p} key={p.id}/>)} 
     </div>
   )
 }
 
 const Total = (props) => {
-  var total = 0;
-      props.content.forEach(content => {
-      total = content.exercises + total
-    });
+  const total = props.content.reduce((s, p) => {
+      return s + p.exercises
+    }, 0);
   
   return (
     <div>
@@ -55,23 +53,27 @@ const Course = (props) => {
 
 const App = () => {
   const course ={ name: 'Half Stack application development',
-   parts: [
+  parts: [
     {
       name: 'Fundamentals of React',
-      exercises: 10
+      exercises: 10,
+      id: 1
     },
     {
       name: 'Using props to pass data',
-      exercises: 7
+      exercises: 7,
+      id: 2
     },
     {
       name: 'State of a component',
-      exercises: 14
+      exercises: 14,
+      id: 3
     },
     {
       name: 'Redux',
-      exercises: 11
-    }
+      exercises: 11,
+      id: 4
+     }
   ]
 }
  
