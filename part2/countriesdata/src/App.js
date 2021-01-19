@@ -2,7 +2,6 @@ import axios from 'axios'
 import { useEffect, useState } from 'react';
 
 function Country({country}){
-  console.log(country)
   return(
     <div>
       <h2>{country.name}</h2>
@@ -19,6 +18,26 @@ function Country({country}){
     </div>
   )
 } 
+
+function SuggestedCountries ({countries,searchFun}) {
+function updateSearch(name){
+ searchFun(name)
+  }
+
+  return(
+    <div>
+      <ul>
+    {countries.map(c=>
+       <li key={c.name}>
+         {c.name}
+         <span style={{margin:3}}>
+         <button onClick={()=>updateSearch(c.name)}>show</button>
+         </span>
+         </li>)} 
+      </ul>
+ </div>
+  )
+}
 
 function App() {
   const [countries, setCountries] = useState([]);
@@ -48,9 +67,7 @@ function App() {
   }
   if(results.length > 1 && results.length < 10){
     return (
-      <div>
-         {results.map(c=> <li key={c.name}>{c.name}</li>)} 
-      </div>
+      <SuggestedCountries countries={results} searchFun={setNewSearch}/>
     )
   }
   if(results.length === 1){
