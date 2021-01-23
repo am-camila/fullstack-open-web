@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import personService from '../src/service/Persons'
 
 const Filter = ({search,handleSearch}) => {
   return(
@@ -46,7 +47,7 @@ const App = () => {
     axios
     .get('http://localhost:3001/persons')
     .then(response => {
-      console.log("success",response.data)
+      console.log("success ",response.data)
       setPersons(response.data)
     })
   }, [])
@@ -71,7 +72,13 @@ const App = () => {
     if (persons.find(p=>p.name.toLowerCase()===newPerson.name.toLowerCase())){
       window.alert(`${newPerson.name} is already added to phonebook`)
     } else {
-    setPersons(persons.concat(newPerson))
+      personService.create(newPerson)
+      .then(
+        returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+        }
+      )
+
     }
     setNewName('')
     setNewNumber('')
