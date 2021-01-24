@@ -21,7 +21,6 @@ export default function Weather({city}){
       .catch(error => {
         console.log(error)
       })
-      console.log(weather)
     },[city]
     )
   
@@ -32,7 +31,7 @@ export default function Weather({city}){
             <br/>
             <img src={weather.weather_icons} alt={weather.weather_descriptions}/>
             <br/>
-            <span>wind: {weather.wind_speed} mph direction {weather.wind_speed} </span>
+            <span>wind: {weather.wind_speed} mph direction {weather.wind_dir} </span>
         </div>
       )
   

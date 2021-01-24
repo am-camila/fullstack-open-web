@@ -21,17 +21,19 @@ const PersonForm =({newName,newNumber,handleNumberChange,handlePersonChange,addP
   </div>)
 }
 
-const Persons = ({personsList}) => {
+const Persons = ({personsList,deletePerson}) => {
 return (
 <ul>
-  {personsList.map(p => <Person person = {p} key={p.name}/>)}
+  {personsList.map(p => <Person person={p} key={p.id} deletePerson={deletePerson}/>)}
 </ul>)
 }
 
-const Person = ({person}) => {
+const Person = ({person, deletePerson}) => {
   return (
     <div>
-       <li>{person.name} {person.number}</li>
+       <li><span>{ person.name } { person.number }</span>
+       <button onClick={ () => deletePerson(person.id) } >delete</button>
+       </li>
     </div>
   )
 }
@@ -44,11 +46,10 @@ const App = () => {
   const filteredPersons = persons.filter(p=> p.name.toLowerCase().includes(search))
 
   useEffect(() => {
-    axios
-    .get('http://localhost:3001/persons')
-    .then(response => {
-      console.log("success ",response.data)
-      setPersons(response.data)
+    personService.getAll()
+    .then(persons => {
+      console.log("success ", persons)
+      setPersons(persons)
     })
   }, [])
 
@@ -84,6 +85,16 @@ const App = () => {
     setNewNumber('')
   }
 
+  function deletePerson (id) {
+    console.log("id:",id)
+    personService.remove(id)
+    .then(
+      setPersons(persons.filter (p=> p.id !== id)),
+      console.log(id," deleted successfully")
+    )
+    .catch(error => console.log("error message",error.data) )
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -92,7 +103,7 @@ const App = () => {
       <PersonForm newName={newName} newNumber={newNumber} handleNumberChange={handleNumberChange}
         handlePersonChange={handlePersonChange} addPerson={addPerson} />
       <h2>Numbers</h2>
-      <Persons personsList={filteredPersons}/>
+      <Persons personsList={filteredPersons} deletePerson={ deletePerson}/>
     </div>
   )
 }
